@@ -5,14 +5,21 @@ So login page, then collections tab/page where top bar allows you to add cards b
 Bonus: Make music tab to play Pokemon music :), maybe have a history of when pokemon cards were added/sold in your collection and have a line graph representing your current profit margins
 
 Use MySQL to store usernames and passwords for accounts, as well as the players collection. The tables will look something like this:
-1.users
+
+### users
+```sql
+users
 ------
 id (PK)
 email (unique)
 password_hash
 created_at
+```
 
-2.user_cards
+### user_cards
+
+```sql
+user_cards
 -----------
 id (PK)
 user_id (FK → users.id)
@@ -29,15 +36,26 @@ purchase_price (optional)
 notes (optional)
 
 created_at
+```
 
-3.price_cache (so we don't hit the API constantly, store already searched up prices here)
+### price_cache (so we don't hit the API constantly, store already searched up prices here)
+```sql
+price_cache
 ------------
 card_api_id (PK)
 market_price
 last_updated
-
+```
 We can get the price of cards with PokeTrace API GET calls, and grab the unique id and prices they list and store it into the price_cache table.
 
 Use Spring Boot, REST, JDBC/JPA, MySQL, React.
 
 Maybe use Cloudinary to store images of the uploaded cards in collection.
+
+## Tech Stack
+
+- Backend: Spring Boot, REST API, JPA/Hibernate
+- Frontend: React
+- Database: MySQL
+- Image Storage: Cloudinary
+- Pricing Data: PokeTrace API
