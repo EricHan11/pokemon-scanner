@@ -8,43 +8,42 @@ Use MySQL to store usernames and passwords for accounts, as well as the players 
 
 ### users
 ```sql
-users
-------
-id (PK)
-username (unique)
-pass
-created_at
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  pass VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ### user_cards
 
 ```sql
-user_cards
------------
-id (PK)
-user_id (FK → users.id)
+CREATE TABLE user_cards (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  card_api_id VARCHAR(100) NOT NULL,
+  card_name VARCHAR(100) NOT NULL,
+  set_name VARCHAR(100) NOT NULL,
 
-card_api_id (string)   -- e.g. "sv1-1"
-card_name              -- stored for fast display
-set_name
-
-condition              -- "NM", "LP", etc.
-is_graded (boolean)
-grade_value (int)      -- PSA 10 etc.
+  `condition` ENUM('NM', 'LP', 'MP', 'HP', 'DM') DEFAULT 'NM',
+  is_graded BOOLEAN DEFAULT FALSE,
+  grade_value INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 purchase_price (optional)
 notes (optional)
-
-created_at
 ```
 
-### price_cache (so we don't hit the API constantly, store already searched up prices here)
+### price_cache (so we don't hit the API constantly, store already searched up prices here. Also PokeTrace API has rate limit, so don't bother with live accuracy atm)
 ```sql
-price_cache
-------------
-card_api_id (PK)
-market_price
-last_updated
+CREATE TABLE price_cache (
+  card_api_id VARCHAR(100) NOT NULL PRIMARY KEY,
+  market_price DECIMAL(10,2) NOT NULL,
+  last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 ```
 We can get the price of cards with PokeTrace API GET calls, and grab the unique id and prices they list and store it into the price_cache table.
 
