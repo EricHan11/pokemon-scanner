@@ -58,3 +58,13 @@ Maybe use Cloudinary to store images of the uploaded cards in collection.
 - Database: MySQL
 - Image Storage: Cloudinary
 - Pricing Data: PokeTrace API
+
+## Plan
+<img width="652" height="1017" alt="image" src="https://github.com/user-attachments/assets/fd6a1b80-6f61-420a-8756-c21b2c55aa23" />
+<img width="483" height="457" alt="image" src="https://github.com/user-attachments/assets/5ddcef25-a014-4d5d-93ae-b11cff698e89" />
+<img width="632" height="807" alt="image" src="https://github.com/user-attachments/assets/0a82aa16-87f2-4f54-8445-d0330b4928d1" />
+<img width="642" height="881" alt="image" src="https://github.com/user-attachments/assets/b96287c2-d63e-430a-8b62-125171a8499e" />
+<img width="647" height="863" alt="image" src="https://github.com/user-attachments/assets/246bdde6-aa64-4cf0-977f-5bb866990b09" />
+
+
+
