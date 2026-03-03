@@ -11,8 +11,8 @@ Use MySQL to store usernames and passwords for accounts, as well as the players 
 users
 ------
 id (PK)
-email (unique)
-password_hash
+username (unique)
+pass
 created_at
 ```
 
