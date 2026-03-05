@@ -1,5 +1,7 @@
 package io.github.erichan11.pokemonscanner.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class UserCard {
     //for. Ex: UserCard card = userCardRepository.findById(1).get(); Hibernate runs
     //SELECT * FROM user_cards WHERE id = 1;. It won't get users table, until you access user field like so:
     //card.getUser().getUsername();. Then Hibernate runs SELECT * FROM users WHERE id = ?;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -32,30 +35,29 @@ public class UserCard {
     private String setName;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 2)
-    private Condition condition;
+    @Column(name="card_condition", length = 2)
+    private Condition cardCondition = Condition.NM;
 
-    @Column(name = "is_graded", nullable = false)
-    private boolean isGraded;
+    @Column(name = "is_graded")
+    private Boolean isGraded = false;
 
     @Column(name = "grade_value")
     private Integer gradeValue;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     public UserCard() { //set the fields that will be default on table
         this.createdAt = LocalDateTime.now();
-        this.isGraded = false;
     }
 
-    public UserCard(User user, String cardApiId, String cardName, String setName, Condition condition, boolean isGraded,
+    public UserCard(User user, String cardApiId, String cardName, String setName, Condition cardCondition, Boolean isGraded,
                     Integer gradeValue, LocalDateTime createdAt) {
         this.user = user;
         this.cardApiId = cardApiId;
         this.cardName = cardName;
         this.setName = setName;
-        this.condition = condition;
+        this.cardCondition = cardCondition;
         this.isGraded = isGraded;
         this.gradeValue = gradeValue;
         this.createdAt = createdAt;
@@ -101,20 +103,20 @@ public class UserCard {
         this.setName = setName;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public Condition getCardCondition() {
+        return cardCondition;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setCardCondition(Condition cardCondition) {
+        this.cardCondition = cardCondition;
     }
 
-    public boolean isGraded() {
+    public Boolean getIsGraded() {
         return isGraded;
     }
 
-    public void setGraded(boolean graded) {
-        isGraded = graded;
+    public void setIsGraded(Boolean isGraded) {
+        this.isGraded = isGraded;
     }
 
     public Integer getGradeValue() {
@@ -141,7 +143,7 @@ public class UserCard {
                 ", cardApiId='" + cardApiId + '\'' +
                 ", cardName='" + cardName + '\'' +
                 ", setName='" + setName + '\'' +
-                ", condition=" + condition +
+                ", condition=" + cardCondition +
                 ", isGraded=" + isGraded +
                 ", gradeValue=" + gradeValue +
                 ", createdAt=" + createdAt +
