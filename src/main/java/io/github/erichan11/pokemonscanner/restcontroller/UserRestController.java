@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserRestController {
     private UserServiceImpl userService;
 
@@ -26,6 +26,11 @@ public class UserRestController {
         //instead of updating
         user.setId(0);
 
+        String wantedUsername = user.getUsername();
+        //check for duplicate username
+        if (userService.existsByUsername(wantedUsername)) {
+            throw new RuntimeException("User with username " + wantedUsername + " already exists. Pick a new one.");
+        }
         //if entity ID is null or 0, treat as new insert. If ID matches existing ID, update instead
         return userService.save(user);
     }

@@ -47,4 +47,8 @@ public class UserServiceImpl {
     public boolean existsById(int id) {
         return userRepository.existsById(id);
     }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

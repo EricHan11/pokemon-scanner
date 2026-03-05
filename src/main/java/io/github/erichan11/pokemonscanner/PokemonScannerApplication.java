@@ -12,10 +12,10 @@ public class PokemonScannerApplication {
 		SpringApplication.run(PokemonScannerApplication.class, args);
 	}
 
-    @Bean
-    public CommandLineRunner commandLineRunner(String[] args) {
-        return runner -> {
-            System.out.println("Hello world!");
-        };
-    }
+//    @Bean
+//    public CommandLineRunner commandLineRunner(String[] args) {
+//        return runner -> {
+//            System.out.println("Hello world!");
+//        };
+//    }
 }
